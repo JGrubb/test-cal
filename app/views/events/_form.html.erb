@@ -27,7 +27,7 @@
       </div>
       <div class="field">
         <%= occ.label :interval, "Repeat?" %>
-        <%= select_tag(:interval, options_for_select([['None', ''], ['Daily', '1'], ['Weekly', '7']]))%>
+        <%= select("event[occurence]", :interval, options_for_select([['None', ''], ['Daily', '1'], ['Weekly', '7']]))%>
       </div>
       <div class="field end_time">
         <%= occ.label :ends %><br />

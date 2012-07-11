@@ -2,8 +2,13 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.json
   def index
-    @events = Event.order("time ASC")
+    #@events = Event.order("time ASC")
+    
+    @occurences = Occurence.all
     @date = params[:month] ? Date.parse("01-#{params[:month]}") : Date.today
+    @occurences.each do |occ|
+      # Make it repeat
+    end
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @events }
@@ -25,7 +30,7 @@ class EventsController < ApplicationController
   # GET /events/new.json
   def new
     @event = Event.new
-    @event.build_occurence
+    1.times { @event.occurences.build }
 
     respond_to do |format|
       format.html # new.html.erb
