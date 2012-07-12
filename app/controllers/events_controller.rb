@@ -3,23 +3,8 @@ class EventsController < ApplicationController
   # GET /events.json
   def index
     #@events = Event.order("time ASC")
-    
-    @occurences = Occurence.all
-    @raw_occurences = Occurence.all
     @date = params[:month] ? Date.parse("01-#{params[:month]}") : Date.today
-    @raw_occurences.map do |o|
-      r = Recurrence.new( :starts => o.starts.to_date,
-                          :every => :day,
-                          :interval => o.interval.to_i, 
-                          :until => (o.ends.to_date < @date.end_of_month) ? o.ends.to_date : @date.end_of_month )
-      r.events.each do |e|
-        new_date = o.clone
-        new_date.starts = e
-        puts new_date.inspect
-        @occurences.push new_date
-      end
-    end
-    
+    @occurences = Occurence.build_recurrences
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @events }
@@ -30,6 +15,7 @@ class EventsController < ApplicationController
   # GET /events/1.json
   def show
     @event = Event.find(params[:id])
+    @occurences = build_recurrences(@event.id)
 
     respond_to do |format|
       format.html # show.html.erb
@@ -97,4 +83,5 @@ class EventsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
 end

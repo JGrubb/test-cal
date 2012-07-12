@@ -11,14 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120711115651) do
+ActiveRecord::Schema.define(:version => 20120712192953) do
 
   create_table "cancellations", :force => true do |t|
     t.integer  "event_id"
-    t.integer  "event_recurrence_id"
     t.date     "date"
-    t.datetime "created_at",          :null => false
-    t.datetime "updated_at",          :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   add_index "cancellations", ["event_id"], :name => "index_cancellations_on_event_id"
