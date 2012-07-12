@@ -20,14 +20,14 @@
     <%= f.text_area :description %>
   </div>
   <div class="repeat">
-    <%= f.fields_for :occurence do |occ| %>
+    <%= f.fields_for :occurences do |occ| %>
       <div class="field">
         <%= occ.label :starts %><br />
         <%= occ.datetime_select :starts %>
       </div>
       <div class="field">
         <%= occ.label :interval, "Repeat?" %>
-        <%= select("event[occurence]", :interval, options_for_select([['None', ''], ['Daily', '1'], ['Weekly', '7']]))%>
+        <%= occ.select(:interval, options_for_select([['None', ''], ['Daily', '1'], ['Weekly', '7']]))%>
       </div>
       <div class="field end_time">
         <%= occ.label :ends %><br />
