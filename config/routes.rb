@@ -1,4 +1,8 @@
 TestCal::Application.routes.draw do
+  post "cancellations/create" => 'cancellations#create'
+
+  get "cancellations/delete"
+
   resources :events
 
   # The priority is based upon order of creation:

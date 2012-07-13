@@ -6,17 +6,23 @@ class Occurence < ActiveRecord::Base
   def self.build_recurrences(id=nil)
     occurences = []
     base_occurences = id ? Event.find(id).occurences : Occurence.all
-    cancellations = id ? Event.find(id).cancellations : Cancellation.all
+    cancellations = id ? Event.find(id).cancellations : Cancellation.all  
     base_occurences.each do |o|
       unless o.interval.empty?
         r = Recurrence.new( :starts => o.starts.to_date,
                             :every => :day,
                             :interval => o.interval.to_i, 
                             :until => o.ends.to_date  )
-        r.events.each do |e|
+        c = []
+        cancellations.each do |can|
+          c << can[:date]
+        end
+        (r.events - c).each do |e|
           new_date = o.dup
           new_date.starts = e
-          occurences.push new_date
+          #unless cancellations.where(:date => e, :event_id => o.event_id)
+            occurences.push new_date
+          #end
         end
       else
         occurences.push o

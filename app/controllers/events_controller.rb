@@ -15,7 +15,7 @@ class EventsController < ApplicationController
   # GET /events/1.json
   def show
     @event = Event.find(params[:id])
-    @occurences = build_recurrences(@event.id)
+    @occurences = Occurence.build_recurrences(@event.id)
 
     respond_to do |format|
       format.html # show.html.erb
@@ -38,6 +38,7 @@ class EventsController < ApplicationController
   # GET /events/1/edit
   def edit
     @event = Event.find(params[:id])
+    @occurences = Occurence.build_recurrences(@event.id)
   end
 
   # POST /events

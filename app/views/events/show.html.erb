@@ -10,7 +10,20 @@
   <%= @event.description %>
 </div>
 
-
+<div class="classes">
+  <% @occurences.each do |occ| %>
+  <div>
+    <%= occ.starts %> | <%= button_to "Cancel Class", 
+                            :controller => "cancellations", 
+                            :action => "create", 
+                            :remote => true, 
+                            :date => occ.starts.to_date,
+                            :event_id => occ.event.id,
+                            :confirm => "Are you sure?"
+                            %>
+  </div>
+  <% end %>
+</div>
 
 
 <%= link_to 'Edit', edit_event_path(@event) %> |
