@@ -11,5 +11,13 @@ class CancellationsController < ApplicationController
   end
 
   def delete
+    @cancellation = Cancellation.find(params[:id])
+    if @cancellation.delete
+      redirect_to cancellations_list_path
+    end
+  end
+  
+  def list
+    @cancellations = Cancellation.all
   end
 end

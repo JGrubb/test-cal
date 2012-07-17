@@ -1,7 +1,12 @@
 TestCal::Application.routes.draw do
-  post "cancellations/create" => 'cancellations#create'
 
-  get "cancellations/delete"
+  
+  
+  controller "cancellations" do
+    post "cancellations/create" => 'cancellations#create'
+    post "cancellations/delete" => 'cancellations#delete'
+    get "cancellations/list"
+  end
 
   resources :events
 

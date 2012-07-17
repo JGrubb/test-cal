@@ -9,20 +9,12 @@ class Occurence < ActiveRecord::Base
     cancellations = id ? Event.find(id).cancellations : Cancellation.all  
     base_occurences.each do |o|
       unless o.interval.empty?
-        r = Recurrence.new( :starts => o.starts.to_date,
-                            :every => :day,
-                            :interval => o.interval.to_i, 
-                            :until => o.ends.to_date  )
-        c = []
-        cancellations.each do |can|
-          c << can[:date]
-        end
+        r = gen_recurrence(o)
+        c = Cancellation.get_cancellations(cancellations)
         (r.events - c).each do |e|
           new_date = o.dup
           new_date.starts = e
-          #unless cancellations.where(:date => e, :event_id => o.event_id)
-            occurences.push new_date
-          #end
+          occurences.push new_date
         end
       else
         occurences.push o
@@ -31,4 +23,13 @@ class Occurence < ActiveRecord::Base
     occurences
   end
   
+  protected
+  
+  def self.gen_recurrence(o)
+    r = Recurrence.new( :starts => o.starts.to_date,
+                        :every => :day,
+                        :interval => o.interval.to_i, 
+                        :until => o.ends.to_date  )
+    r
+  end
 end

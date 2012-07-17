@@ -1,0 +1,12 @@
+<% @cancellations.each do |can| %>
+  <div id="name">
+    <%= can.event.name %> | <%= can.date %>
+    <%= button_to "Restore Class", 
+                            :controller => "cancellations", 
+                            :action => "delete", 
+                            :remote => true, 
+                            :id => can.id,
+                            :confirm => "Are you sure?"
+                            %>
+  </div>
+<% end %>
